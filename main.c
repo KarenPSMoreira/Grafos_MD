@@ -18,7 +18,6 @@ void imprimirMatriz(int **pMatriz, int n, int m, int *pArray);
 
 int main()
 {
-
     int nV, nA, i, aux;
     int **pMatrizInc;
     int op;
@@ -40,7 +39,7 @@ int main()
         fflush(stdin);
         switch (op)
         {
-        case 1: // Letra A) --> defin9ir a quantidade de elementos (vertices) e preencher array
+        case 1: // Letra A) --> definir a quantidade de elementos (vertices) e preencher array
             nA = 0;
             fflush(stdin);
             printf("\n\tInforme o numero de elementos: ");
@@ -48,7 +47,6 @@ int main()
 
             for (i = 0; i < nV; i++)
             {
-
                 printf("\n\t\t - Elemento %d: ", (i + 1));
                 scanf("%d", &array[i]);
             }
@@ -66,7 +64,6 @@ int main()
             {
                 printf("\n\tInforme o numero de arestas: ");
                 scanf("%d", &nA);
-
                 if (nA > ((((nV * nV) - nV) / 2)))
                 {
                     printf("\n	Invalido! Informe um valor entre 1 e %d\n", (((nV * nV) - nV) / 2));
@@ -97,7 +94,7 @@ int main()
                 printf("\n\tAtencao! Matriz de Incidencia nao inicializada. (Opcao 2 do menu)\n ");
                 break;
             }
-
+                
             printf("\n\tDigite o vertice: ");
             scanf("%d", &aux);
 
@@ -117,6 +114,7 @@ int main()
                 break;
             }
             break;
+                
         case 6:
             printf("\t____________________________________________\n\n");
             printf("\tDesenvolvido por:\n\n");
