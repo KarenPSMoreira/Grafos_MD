@@ -2,8 +2,9 @@
     Authors:
         Guilherme Henrique Luiz E. Pereira
         Karen P.S. Moreira
-    Fumec University - Computer Science - Discrete Mathematics - 2022/2
-    Instructor: Emerson Eustáquio
+    FUMEC University - Computer Science - Discrete Mathematics 2022/2
+    Instructor: Emerson Eustaquio
+
 *******************************************************************************/
 
 #include <stdio.h>
@@ -11,6 +12,7 @@
 #include <string.h>
 
 int **matrizIncidencia(int nV, int nA, int *pArray);
+int **matrizAdjacencia(int nV, int *pArray);
 int **grauVertice(int **pMatriz, int vtc, int n, int nA, int *pArray);
 void vertArestAdj(int **pMtrAdj, int nV);
 void imprimirMatriz(int **pMatriz, int n, int m, int *pArray);
@@ -19,16 +21,17 @@ int main()
 {
     int nV, nA, i, aux;
     int **pMatrizInc;
+    int **pMatrizAdj;
     int op;
     int *pArray;
-    int array[100];
 
     do
     {
         fflush(stdin);
+        int array[nV];
 
         printf("\n\n\t============================================\n\n");
-        printf("\t\tMENU - GRAFOS SIMPLES\n\n");
+        printf("\t\t  MENU - GRAFOS SIMPLES\n\n");
         printf("\t============================================\n\n");
         printf("\t ESCOLHA A OPCAO DESEJADA:  \n\n");
         printf("\t  1  %c   Novos Elementos \n\n\t  2  %c   Matriz de Incidencia\n\n\t  3  %c   Matriz de Adjacencia\n\n\t  4  %c   Grau do Vertice\n\n\t  5  %c   Conjuntos do Grafo\n\n\n\t  6   %c  Sair\n", 16, 16, 16, 16, 16, 16);
@@ -43,8 +46,6 @@ int main()
             fflush(stdin);
             printf("\n\tInforme o numero de elementos: ");
             scanf("%i", &nV);
-            
-            array[nV];
 
             for (i = 0; i < nV; i++)
             {
@@ -52,7 +53,7 @@ int main()
                 scanf("%d", &array[i]);
             }
 
-            pArray = &array;
+            pArray = &array[0];
             break;
 
         case 2: // Letra B
@@ -71,7 +72,7 @@ int main()
                 }
             } while (nA > ((((nV * nV) - nV) / 2)) || nA < 1); // limite de arestas de um grafo simples
 
-            pMatrizInc = matrizIncidencia(nV, nA, pArray); // funcao para cirar a matriz de incidencia
+            pMatrizInc = matrizIncidencia(nV, nA, pArray); // funcao para criar a matriz de incidencia
 
             printf("\n\n\t\tMATRIZ DE INICIDENCIA\n\n\t\t"); // imprimir matriz
             for (i = 0; i < nA; i++)
@@ -81,15 +82,18 @@ int main()
             imprimirMatriz(pMatrizInc, nV, nA, pArray);
             break;
 
-        case 3:
+        case 3: // Letra C
             if (nV == 0)
             { // confere se o usuario iniciou o array
                 printf("\n\tAtencao! Elementos nao informados. (Opcao 1 do menu)\n ");
                 break;
             }
+            
+            pMatrizAdj = matrizAdjacencia(nV, pArray);
+			
             break;
 
-        case 4:
+        case 4: // Letra D
             if (nA == 0)
             { // confere se o usuario iniciou a matriz de incidencia
                 printf("\n\tAtencao! Matriz de Incidencia nao inicializada. (Opcao 2 do menu)\n ");

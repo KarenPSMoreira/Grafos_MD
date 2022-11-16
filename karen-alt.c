@@ -12,7 +12,7 @@
 
 int **matrizIncidencia(int nV, int nA, int *pArray);
 int **grauVertice(int **pMatriz, int vtc, int n, int nA, int *pArray);
-void vertArestAdj(int **pMtrAdj, int nV);
+
 void imprimirMatriz(int **pMatriz, int n, int m, int *pArray);
 
 int main()
@@ -109,12 +109,11 @@ int main()
             break;
 
         case 5:
-            if (nV == 0) {
+            if (nV == 0)
+            {
                 printf("\n\tAtencao! Elementos nao informados. (Opcao 1 do menu)\n ");
                 break;
             }
-            
-            vertArestAdj(pMatrizAdj, nV);
             break;
                 
         case 6:
@@ -217,92 +216,6 @@ int **matrizIncidencia(int nV, int nA, int *pArray)
     return pMtrInc;
 }
 
-int **matrizAdjacencia(int nV, int *pArray) {
-	// Declara��es:
-		// Definindo n:
-			int n = nV + 1; 
-			
-		// Variaveis para o loop For:
-			int i, j;
-		
-		// Variaveis para os vertices conectados:
-			int par1, par2;
-		
-	// Alocando o ponteiro e preenchendo com zero a matriz:
-		int **pMtrAdj = malloc (n * sizeof(*pMtrAdj));
-		
-		for (i=0; i<n; i++) {
-	        pMtrAdj[i] = malloc(n * sizeof(*pMtrAdj[i]));
-	        for (j=0; j<n; j++) {
-	            pMtrAdj[i][j] = 0;
-	        }
-	    }
-	
-	// Preenchendo Cabecalho:
-		for(i=0; i<1; i++) {
-            for(j=1; j<=n; j++) { 
-                pMtrAdj[i][j] = *(pArray+(j-1));
-            }
-        }
-        
-    // Preenchendo Periodo
-    	for(i=1; i<n; i++) {
-            for(j=0; j<1; j++) {
-                pMtrAdj[i][j] = *(pArray+(i-1));
-            }
-        }
-
-    // Preenchendo a Matriz de Adjacencia:
-    	// Perguntando os pares conectados:
-    		int arestas = ((n*n) - n)/2;
-			int x = 0;
-			char answer;
-			
-			do{
-				fflush(stdin);
-				
-				printf("\n\tInsira os pares de vertice que possuem arestas entre eles, separando-os por espaco: ");
-				scanf("%i %i", &par1, &par2);
-				
-				x++;	
-				
-				for(i=0; i<n; i++) {
-		            for(j=0; j<n; j++) {
-		                if( ((par1 == j) && (par2 == i))|| ((par1 == i) && (par2 == j))) {
-		                	pMtrAdj[i][j] = 1;
-						}
-		            }
-		        }
-		        
-		        fflush(stdin);
-		        
-				printf("\n\tDesejas inserir as coordenadas de uma arestas? ('s' ou 'n'): ");
-				scanf("%c", &answer);
-				
-				if(answer == 'n') {
-					break;
-				}
-			} while ((answer == 's') || (x == arestas));
-	
-	// Imprimindo a matriz:		
-		printf("\n\n\t========== Matriz de Adjacencia Bidirecional ==========\n\n\t");
-		//imprimirMatriz(pMtrAdj, n, n, pArray); M�todo de Impressao diferente!
-		
-		for(i=0; i<n; i++) {
-            for(j=0; j<n; j++) {
-            	if(i==0 && j==0) {
-            		printf("\t %c", ' ');
-				}else {
-					printf("\t %i ", pMtrAdj[i][j]);
-				}
-            }
-            printf("\n\t");
-        }
-		
-	// Retornando a matriz:
-		return pMtrAdj;
-}
-
 int **grauVertice(int **pMatriz, int vtc, int n, int nA, int *pArray)
 { // Letra E
     int cont = 0, m;
@@ -312,36 +225,6 @@ int **grauVertice(int **pMatriz, int vtc, int n, int nA, int *pArray)
         cont = cont + pMatriz[n][m]; // soma os valores de cada aresta em rela
     }
     printf("\n\t\tGrau do vertice %d = %d", vtc, cont);
-}
-
-void vertArestAdj(int **pMtrAdj, int nV){
-	// Declaracoes:
-		int n = nV + 1;
-		int i, j;
-	
-	// Imprimindo os vertices:
-		printf("\n\tOs vertices do grafos sao: v(");
-		
-		for (i=1; i<n; i++){
-			if(i != (n-1)){
-				printf("%i, ", i);
-			} else {
-				printf("%i", i);
-			}
-		}
-		
-		printf(")\n\n");
-	
-	// Imprimindo as ligacoes/extreminadades das arestas:
-		printf("\tAs arestas do grafos sao: \n");
-		
-		for(i=1; i<n; i++) {
-            for(j=1; j<n; j++) {
-                if( pMtrAdj[i][j] == 1) {
-                	printf("\te(%i,%i)\n", i, j);
-				}
-            }
-        }
 }
 
 void imprimirMatriz(int **pMatriz, int n, int m, int *pArray)
