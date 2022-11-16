@@ -14,7 +14,7 @@
 int **matrizIncidencia(int nV, int nA, int *pArray);
 int **matrizAdjacencia(int nV, int *pArray);
 int **grauVertice(int **pMatriz, int vtc, int n, int nA, int *pArray);
-
+void vertArestAdj(int **pMtrAdj, int nV);
 void imprimirMatriz(int **pMatriz, int n, int m, int *pArray);
 
 int main()
@@ -113,11 +113,12 @@ int main()
             break;
 
         case 5:
-            if (nV == 0)
-            {
+            if (nV == 0) {
                 printf("\n\tAtencao! Elementos nao informados. (Opcao 1 do menu)\n ");
                 break;
             }
+            
+            vertArestAdj(pMatrizAdj, nV);
             break;
                 
         case 6:
@@ -221,7 +222,7 @@ int **matrizIncidencia(int nV, int nA, int *pArray)
 }
 
 int **matrizAdjacencia(int nV, int *pArray) {
-	// Declarações:
+	// Declaraï¿½ï¿½es:
 		// Definindo n:
 			int n = nV + 1; 
 			
@@ -289,7 +290,7 @@ int **matrizAdjacencia(int nV, int *pArray) {
 	
 	// Imprimindo a matriz:		
 		printf("\n\n\t========== Matriz de Adjacencia Bidirecional ==========\n\n\t");
-		//imprimirMatriz(pMtrAdj, n, n, pArray); Método de Impressao diferente!
+		//imprimirMatriz(pMtrAdj, n, n, pArray); Mï¿½todo de Impressao diferente!
 		
 		for(i=0; i<n; i++) {
             for(j=0; j<n; j++) {
@@ -315,6 +316,36 @@ int **grauVertice(int **pMatriz, int vtc, int n, int nA, int *pArray)
         cont = cont + pMatriz[n][m]; // soma os valores de cada aresta em rela
     }
     printf("\n\t\tGrau do vertice %d = %d", vtc, cont);
+}
+
+void vertArestAdj(int **pMtrAdj, int nV){
+	// Declaracoes:
+		int n = nV + 1;
+		int i, j;
+	
+	// Imprimindo os vertices:
+		printf("\n\tOs vertices do grafos sao: v(");
+		
+		for (i=1; i<n; i++){
+			if(i != (n-1)){
+				printf("%i, ", i);
+			} else {
+				printf("%i", i);
+			}
+		}
+		
+		printf(")\n\n");
+	
+	// Imprimindo as ligacoes/extreminadades das arestas:
+		printf("\tAs arestas do grafos sao: \n");
+		
+		for(i=1; i<n; i++) {
+            for(j=1; j<n; j++) {
+                if( pMtrAdj[i][j] == 1) {
+                	printf("\te(%i,%i)\n", i, j);
+				}
+            }
+        }
 }
 
 void imprimirMatriz(int **pMatriz, int n, int m, int *pArray)
