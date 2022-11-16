@@ -2,8 +2,9 @@
     Authors:
         Guilherme Henrique Luiz E. Pereira
         Karen P.S. Moreira
-    Fumec University - Computer Science - Discrete Mathematics - 2022/2
-    Instructor: Emerson Eustáquio
+    FUMEC University - Computer Science - Discrete Mathematics 2022/2
+    Instructor: Emerson Eustaquio
+
 *******************************************************************************/
 
 #include <stdio.h>
@@ -11,6 +12,7 @@
 #include <string.h>
 
 int **matrizIncidencia(int nV, int nA, int *pArray);
+int **matrizAdjacencia(int nV, int *pArray);
 int **grauVertice(int **pMatriz, int vtc, int n, int nA, int *pArray);
 void vertArestAdj(int **pMtrAdj, int nV);
 void imprimirMatriz(int **pMatriz, int n, int m, int *pArray);
@@ -19,6 +21,7 @@ int main()
 {
     int nV, nA, i, aux;
     int **pMatrizInc;
+    int **pMatrizAdj;
     int op;
     int *pArray;
     int array[100];
@@ -38,7 +41,7 @@ int main()
         fflush(stdin);
         switch (op)
         {
-        case 1: // Letra A) --> definir a quantidade de elementos (vertices) e preencher array
+        case 1:
             nA = 0;
             fflush(stdin);
             printf("\n\tInforme o numero de elementos: ");
@@ -52,10 +55,10 @@ int main()
                 scanf("%d", &array[i]);
             }
 
-            pArray = &array;
+            pArray = &array[0];
             break;
 
-        case 2: // Letra B
+        case 2:
             if (nV == 0)
             { // confere se o usuario iniciou o array
                 printf("\n\tAtencao! Elementos nao informados. (Opcao 1 do menu)\n ");
@@ -71,13 +74,15 @@ int main()
                 }
             } while (nA > ((((nV * nV) - nV) / 2)) || nA < 1); // limite de arestas de um grafo simples
 
-            pMatrizInc = matrizIncidencia(nV, nA, pArray); // funcao para cirar a matriz de incidencia
+            pMatrizInc = matrizIncidencia(nV, nA, pArray); // funcao para criar a matriz de incidencia
 
             printf("\n\n\t\tMATRIZ DE INICIDENCIA\n\n\t\t"); // imprimir matriz
-            for (i = 0; i < nA; i++)
+            
+			for (i = 0; i < nA; i++)
             {
                 printf("|a%d\t", i + 1);
             }
+            
             imprimirMatriz(pMatrizInc, nV, nA, pArray);
             break;
 
@@ -87,6 +92,9 @@ int main()
                 printf("\n\tAtencao! Elementos nao informados. (Opcao 1 do menu)\n ");
                 break;
             }
+            
+            pMatrizAdj = matrizAdjacencia(nV, pArray);
+			
             break;
 
         case 4:
@@ -135,7 +143,7 @@ int main()
 }
 
 int **matrizIncidencia(int nV, int nA, int *pArray)
-{  // Letra B                                   
+{                                   
     int vrt1, vrt2, n, m, valido = 1; // sendo n = Linha e M = Coluna
 
     int **pMtrInc = malloc(nV * sizeof(*pMtrInc)); // alocando memoria
@@ -218,7 +226,7 @@ int **matrizIncidencia(int nV, int nA, int *pArray)
 }
 
 int **matrizAdjacencia(int nV, int *pArray) {
-	// Declara��es:
+	// Declaracoes:
 		// Definindo n:
 			int n = nV + 1; 
 			
