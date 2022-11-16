@@ -2,8 +2,8 @@
     Authors:
         Guilherme Henrique Luiz E. Pereira
         Karen P.S. Moreira
-    Fumec University - Computer Science - Discrete Mathematics 2022/2
-    Instructor: Emerson Eust√°quio
+    FUMEC University - Computer Science - Discrete Mathematics 2022/2
+    Instructor: Emerson Eustaquio
 
 *******************************************************************************/
 
@@ -12,6 +12,7 @@
 #include <string.h>
 
 int **matrizIncidencia(int nV, int nA, int *pArray);
+int **matrizAdjacencia(int nV, int *pArray);
 int **grauVertice(int **pMatriz, int vtc, int n, int nA, int *pArray);
 
 void imprimirMatriz(int **pMatriz, int n, int m, int *pArray);
@@ -20,6 +21,7 @@ int main()
 {
     int nV, nA, i, aux;
     int **pMatrizInc;
+    int **pMatrizAdj;
     int op;
     int *pArray;
 
@@ -29,7 +31,7 @@ int main()
         int array[nV];
 
         printf("\n\n\t============================================\n\n");
-        printf("\t\tMENU - GRAFOS SIMPLES\n\n");
+        printf("\t\t  MENU - GRAFOS SIMPLES\n\n");
         printf("\t============================================\n\n");
         printf("\t ESCOLHA A OPCAO DESEJADA:  \n\n");
         printf("\t  1  %c   Novos Elementos \n\n\t  2  %c   Matriz de Incidencia\n\n\t  3  %c   Matriz de Adjacencia\n\n\t  4  %c   Grau do Vertice\n\n\t  5  %c   Conjuntos do Grafo\n\n\n\t  6   %c  Sair\n", 16, 16, 16, 16, 16, 16);
@@ -51,7 +53,7 @@ int main()
                 scanf("%d", &array[i]);
             }
 
-            pArray = &array;
+            pArray = &array[0];
             break;
 
         case 2: // Letra B
@@ -70,7 +72,7 @@ int main()
                 }
             } while (nA > ((((nV * nV) - nV) / 2)) || nA < 1); // limite de arestas de um grafo simples
 
-            pMatrizInc = matrizIncidencia(nV, nA, pArray); // funcao para cirar a matriz de incidencia
+            pMatrizInc = matrizIncidencia(nV, nA, pArray); // funcao para criar a matriz de incidencia
 
             printf("\n\n\t\tMATRIZ DE INICIDENCIA\n\n\t\t"); // imprimir matriz
             for (i = 0; i < nA; i++)
@@ -80,15 +82,18 @@ int main()
             imprimirMatriz(pMatrizInc, nV, nA, pArray);
             break;
 
-        case 3:
+        case 3: // Letra C
             if (nV == 0)
             { // confere se o usuario iniciou o array
                 printf("\n\tAtencao! Elementos nao informados. (Opcao 1 do menu)\n ");
                 break;
             }
+            
+            pMatrizAdj = matrizAdjacencia(nV, pArray);
+			
             break;
 
-        case 4:
+        case 4: // Letra D
             if (nA == 0)
             { // confere se o usuario iniciou a matriz de incidencia
                 printf("\n\tAtencao! Matriz de Incidencia nao inicializada. (Opcao 2 do menu)\n ");
@@ -213,6 +218,92 @@ int **matrizIncidencia(int nV, int nA, int *pArray)
     }
 
     return pMtrInc;
+}
+
+int **matrizAdjacencia(int nV, int *pArray) {
+	// DeclaraÁıes:
+		// Definindo n:
+			int n = nV + 1; 
+			
+		// Variaveis para o loop For:
+			int i, j;
+		
+		// Variaveis para os vertices conectados:
+			int par1, par2;
+		
+	// Alocando o ponteiro e preenchendo com zero a matriz:
+		int **pMtrAdj = malloc (n * sizeof(*pMtrAdj));
+		
+		for (i=0; i<n; i++) {
+	        pMtrAdj[i] = malloc(n * sizeof(*pMtrAdj[i]));
+	        for (j=0; j<n; j++) {
+	            pMtrAdj[i][j] = 0;
+	        }
+	    }
+	
+	// Preenchendo Cabecalho:
+		for(i=0; i<1; i++) {
+            for(j=1; j<=n; j++) { 
+                pMtrAdj[i][j] = *(pArray+(j-1));
+            }
+        }
+        
+    // Preenchendo Periodo
+    	for(i=1; i<n; i++) {
+            for(j=0; j<1; j++) {
+                pMtrAdj[i][j] = *(pArray+(i-1));
+            }
+        }
+
+    // Preenchendo a Matriz de Adjacencia:
+    	// Perguntando os pares conectados:
+    		int arestas = ((n*n) - n)/2;
+			int x = 0;
+			char answer;
+			
+			do{
+				fflush(stdin);
+				
+				printf("\n\tInsira os pares de vertice que possuem arestas entre eles, separando-os por espaco: ");
+				scanf("%i %i", &par1, &par2);
+				
+				x++;	
+				
+				for(i=0; i<n; i++) {
+		            for(j=0; j<n; j++) {
+		                if( ((par1 == j) && (par2 == i))|| ((par1 == i) && (par2 == j))) {
+		                	pMtrAdj[i][j] = 1;
+						}
+		            }
+		        }
+		        
+		        fflush(stdin);
+		        
+				printf("\n\tDesejas inserir as coordenadas de uma arestas? ('s' ou 'n'): ");
+				scanf("%c", &answer);
+				
+				if(answer == 'n') {
+					break;
+				}
+			} while ((answer == 's') || (x == arestas));
+	
+	// Imprimindo a matriz:		
+		printf("\n\n\t========== Matriz de Adjacencia Bidirecional ==========\n\n\t");
+		//imprimirMatriz(pMtrAdj, n, n, pArray); MÈtodo de Impressao diferente!
+		
+		for(i=0; i<n; i++) {
+            for(j=0; j<n; j++) {
+            	if(i==0 && j==0) {
+            		printf("\t %c", ' ');
+				}else {
+					printf("\t %i ", pMtrAdj[i][j]);
+				}
+            }
+            printf("\n\t");
+        }
+		
+	// Retornando a matriz:
+		return pMtrAdj;
 }
 
 int **grauVertice(int **pMatriz, int vtc, int n, int nA, int *pArray)
