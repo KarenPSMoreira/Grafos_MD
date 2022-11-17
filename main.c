@@ -4,7 +4,6 @@
         Karen P.S. Moreira
     FUMEC University - Computer Science - Discrete Mathematics 2022/2
     Instructor: Emerson Eustaquio
-
 *******************************************************************************/
 
 #include <stdio.h>
@@ -41,7 +40,7 @@ int main()
         fflush(stdin);
         switch (op)
         {
-        case 1:
+        case 1: // Letra A) 
             nA = 0;
             fflush(stdin);
             printf("\n\tInforme o numero de elementos: ");
@@ -58,7 +57,7 @@ int main()
             pArray = &array[0];
             break;
 
-        case 2:
+        case 2: // Letra B)
             if (nV == 0)
             { // confere se o usuario iniciou o array
                 printf("\n\tAtencao! Elementos nao informados. (Opcao 1 do menu)\n ");
@@ -86,7 +85,7 @@ int main()
             imprimirMatriz(pMatrizInc, nV, nA, pArray);
             break;
 
-        case 3:
+        case 3: // Letra C)
             if (nV == 0)
             { // confere se o usuario iniciou o array
                 printf("\n\tAtencao! Elementos nao informados. (Opcao 1 do menu)\n ");
@@ -97,7 +96,7 @@ int main()
 			
             break;
 
-        case 4:
+        case 4: // Letra E)
             if (nA == 0)
             { // confere se o usuario iniciou a matriz de incidencia
                 printf("\n\tAtencao! Matriz de Incidencia nao inicializada. (Opcao 2 do menu)\n ");
@@ -116,7 +115,7 @@ int main()
             }
             break;
 
-        case 5:
+        case 5: //Letra F)
             if (nV == 0) {
                 printf("\n\tAtencao! Elementos nao informados. (Opcao 1 do menu)\n ");
                 break;
@@ -294,7 +293,7 @@ int **matrizAdjacencia(int nV, int *pArray) {
 	
 	// Imprimindo a matriz:		
 		printf("\n\n\t========== Matriz de Adjacencia Bidirecional ==========\n\n\t");
-		//imprimirMatriz(pMtrAdj, n, n, pArray); M�todo de Impressao diferente!
+		//imprimirMatriz(pMtrAdj, n, n, pArray); M?todo de Impressao diferente!
 		
 		for(i=0; i<n; i++) {
             for(j=0; j<n; j++) {
